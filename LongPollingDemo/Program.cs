@@ -5,10 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var connectionString = config.GetConnectionString("DefaultConnection");
 var serverVersion = ServerVersion.AutoDetect(connectionString);
+
 // Add services to the container.
-
-
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
 {
