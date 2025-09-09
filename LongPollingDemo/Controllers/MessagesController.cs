@@ -21,10 +21,10 @@ namespace LongPollingDemo.Controllers
             var timeout = TimeSpan.FromSeconds(30);
             var startTime = DateTime.UtcNow;
 
-            while (DateTime.Now - startTime > timeout)
+            while (DateTime.UtcNow - startTime < timeout)
             {
                 var newMessages = await _dbContext.Messages
-                    .Where(x => x.DeletedDate == null && (lastTimeStamp == null || x.CreatedDate > lastTimeStamp))
+                    .Where(x => x.DeletedDate == null && ((lastTimeStamp == null || x.CreatedDate > lastTimeStamp) || x.ReadCounter == 0))
                     .OrderBy(x => x.CreatedDate)
                     .ToListAsync();
 
